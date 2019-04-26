@@ -1,0 +1,35 @@
+<!--1.使用小程序的animation动画(setInterval之后会有卡顿)
+2.使用transition--setTimeout去设置动画
+3.使用canvs绘制（下载音频文件会阻塞canvas的绘制）且设置setInterval的时间太短，会影响性能
+4.使用wxdraw库--同上，在下载的时候会阻塞-->
+<view bindtap="onShowMenu" class="content-backdrop" style="background-color:{{backgroundList[backgroundIndex]}};">
+  <view class="content-item" style="padding-top:{{pageHeight+600}}rpx;transition-duration:{{displayCss.transitionDuration}}ms; transform:translateY(-{{displayCss.practicalHeight}}px)">
+    <view wx:for="{{inputTextArray}}" wx:key="{{index}}" class="content-scroll" data-index="{{index}}" style="height:{{item.fontHeight}}rpx;line-height:{{item.fontHeight}}rpx;font-size:{{fontSizeList[fontSizeIndex]}}rpx;color:{{fontColorList[fontColorIndex]}}">
+      {{item.text}}
+    </view>
+  </view>
+</view>
+
+<import src="./tpl.wxml" />
+
+<view class="menu flex" style="animation-name: {{showMenu?'rise':'fall'}};">
+  <block wx:if="{{!showInput}}">
+    <!--这里使用的是组件-->
+    <bottom-icon changeName="onShowInput" bind:onChangeEvent="onChangeEvent" img="/img/font.png" title="文字"></bottom-icon>
+    <bottom-icon changeName="onSetFontSize" currentIndex="{{fontSizeIndex + 1}}" bind:onChangeEvent="onChangeEvent" img="/img/font_size.png" title="字号"></bottom-icon>
+    <bottom-icon changeName="onSetFontColor" currentIndex="{{fontColorIndex + 1}}" bind:onChangeEvent="onChangeEvent" img="/img/color.png" title="颜色"></bottom-icon>
+    <bottom-icon changeName="onSetBackgroundColor" currentIndex="{{backgroundIndex + 1}}" bind:onChangeEvent="onChangeEvent" img="/img/background.png" title="背景"></bottom-icon>
+    <bottom-icon changeName="onSetSpeed" currentIndex="{{speedIndex + 1}}" bind:onChangeEvent="onChangeEvent" img="/img/speed.png" title="速度"></bottom-icon>
+
+    <!--下面的是使用的template模版，放在当前页面文件下-->
+    <!--<template is="menuTpl" data="{{onChangeName: 'onShowInput',  img: '/img/font.png', title: '文字'}}" />
+    <template is="menuTpl" data="{{onChangeName: 'onSetFontSize', currentIndex: fontSizeIndex + 1, img: '/img/font_size.png', title: '字号'}}" />
+    <template is="menuTpl" data="{{onChangeName: 'onSetFontColor',  currentIndex: fontColorIndex + 1, img: '/img/color.png', title: '颜色'}}" />
+    <template is="menuTpl" data="{{onChangeName: 'onSetBackgroundColor',  currentIndex: backgroundIndex + 1, img: '/img/background.png', title: '背景'}}" />
+    <template is="menuTpl" data="{{onChangeName: 'onSetSpeed', currentIndex: speedIndex + 1, img: '/img/speed.png', title: '速度'}}" />-->
+  </block>
+  <block wx:else>
+    <input class="bottom-text" value="{{defaultInputValue}}" maxlength="100" placeholder="请输入…" cursor-spacing="20" focus="true" bindconfirm="onSendText" bindinput="onKeyInput"></input>
+    <button bindtap="onSendText" class="send-btn" hover-class="none">发送</button>
+  </block>
+</view>

@@ -1,0 +1,6 @@
+<!--底部的图标样式-->
+<view class="menu-item" bindtap='_onChangeEvent' data-change-name="{{changeName}}">
+  <view class='menu-value' hidden="{{!currentIndex}}">{{currentIndex}}</view>
+  <image class="menu-img" src='{{img}}' />
+  <view class='menu-title'>{{title}}</view>
+</view>

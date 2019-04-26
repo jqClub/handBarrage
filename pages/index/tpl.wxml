@@ -1,0 +1,8 @@
+<!--底部的图标样式-->
+<template name="menuTpl">
+  <view class="menu-item" bindtap='{{onChangeName}}'>
+    <view class='menu-value' hidden="{{!currentIndex}}">{{currentIndex}}</view>
+    <image class="menu-img" src='{{img}}' />
+    <view class='menu-title'>{{title}}</view>
+  </view>
+</template>
